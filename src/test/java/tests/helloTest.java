@@ -4,7 +4,6 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
@@ -52,15 +51,16 @@ public class helloTest {
     @AfterClass
     public static void teardown(){
         //close the app
-     //   driver.quit();
+        driver.quit();
     }
 
     @Test
-    public void helloTest()
+    public void canCreatePasswordTest()
     {
         ChatView console = new ChatView(driver);
         console.continueForRootedDevice();
-        console.enterPassword("password");
+        console.createPassword("password");
+        console.verifyPasswordIsSet();
     }
 
 }
