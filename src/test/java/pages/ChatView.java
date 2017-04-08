@@ -1,6 +1,7 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
@@ -61,8 +62,16 @@ public class ChatView {
     public void verifyPasswordIsSet(){
         //button "tap to enter phone number" is shown
         wait.until(ExpectedConditions.elementToBeClickable(btnRequestPhone));
-        //screen contains text "Phew that was hard" TODO: replace hardcoded string "Phew that was hard" check
-        Assert.isTrue(driver.getPageSource().contains("Phew that was hard"),"Text Phew that was hard is not found on screen");
+
+        //screen contains text "Phew that was hard" TODO: replace hardcoded string "Find a bug" check
+        Assert.isTrue(driver.getPageSource().contains("Find a bug"),"Text Phew that was hard is not found on screen");
+    }
+
+    public void verifyPasswordRequestIsVisible(){
+        //button "tap to enter phone number" is shown
+        wait.until(ExpectedConditions.elementToBeClickable(requestPassword));
+        //screen contains text "Phew that was hard" TODO: replace hardcoded string "Welcome to Status " check
+        Assert.isTrue(driver.getPageSource().contains("Welcome to Status"),"Welcome to Status is not found on screen");
     }
 
 
