@@ -34,6 +34,7 @@ public class HelloTest {
     public static final String USERNAME = System.getenv("SAUCE_USERNAME");
     public static final String ACCESS_KEY = System.getenv("SAUCE_ACCESS_KEY");
     public static final String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
+    public static final String buildTag = System.getenv("JOB_NAME") + "__" + System.getenv("BUILD_NUMBER");
 
 
     @BeforeClass
@@ -47,42 +48,17 @@ public class HelloTest {
         caps.setCapability("platformVersion","4.4");
         caps.setCapability("platformName","Android");
 
+        caps.setCapability("build", buildTag);
         //read url to apk file from Jenkins param
-        String apkUrl = System.getProperty("apk_url");
+        String apkUrl = System.getProperty("apkUrl");
 
         caps.setCapability("app", apkUrl);
       //  caps.setCapability("app", "http://artifacts.status.im:8081/artifactory/nightlies-local/im.status.ethereum-7b89ad.apk");
 
         driver = new AndroidDriver<WebElement>(new URL(URL), caps);
-
+        printSessionId();
     }
 
-    public static void SetupLocal() throws MalformedURLException {
-
-       /* DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
-        cap.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "im.status.ethereum");
-        cap.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "im.status.ethereum.MainActivity");
-
-        cap.setCapability("avd", "Nexus_4_API_19");
-
-        driver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), cap);
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-*/
-
-        /////////
-      /*  File appDir = new File("D:\\Users\\home\\IdeaProjects\\myFirstAppiumProject\\apps");
-        File app = new File(appDir, "im.status.ethereum-de41bd.apk");
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("device","Android");
-        //mandatory capabilities
-        capabilities.setCapability("deviceName","Android");
-        capabilities.setCapability("platformName","Android");
-        //other caps
-        capabilities.setCapability("app", app.getAbsolutePath());
-        driver =  new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-*/
-    }
 
     @AfterClass
     public static void teardown(){
@@ -98,13 +74,20 @@ public class HelloTest {
         console.verifyPasswordRequestIsVisible();
     }
 
-    @Test
+    //@Test
     public void canCreatePasswordTest()
     {
         ChatView console = new ChatView(driver);
         console.continueForRootedDevice();
         console.createPassword("password");
         console.verifyPasswordIsSet();
+    }
+
+    static private void printSessionId() {
+
+        String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s",
+                (((RemoteWebDriver) driver).getSessionId()).toString(), buildTag);
+        System.out.println(message);
     }
 
 }
