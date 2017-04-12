@@ -1,29 +1,20 @@
-package pages;
+package screens;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.util.Assert;
 
-/**
- * Created by home on 3/26/2017.
- */
-public class ChatView {
-    protected AppiumDriver<WebElement> driver;
-    private WebDriverWait wait;
 
+public class ChatScreen extends AbstractScreen {
 
-    public ChatView(AppiumDriver<WebElement> driver){
-        this.driver = driver;
-        wait = new WebDriverWait(driver,35);
-        PageFactory.initElements(new AppiumFieldDecorator(driver),this);
+    public ChatScreen(AppiumDriver<WebElement> driver){
+        super(driver);
     }
+
 
     @AndroidFindBy(id="android:id/button1")
     public WebElement btnContinue;
