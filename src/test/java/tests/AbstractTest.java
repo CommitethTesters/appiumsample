@@ -10,16 +10,12 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import utility.AppiumDriverBuilder;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-
 import com.saucelabs.junit.SauceOnDemandTestWatcher;
 import com.saucelabs.common.SauceOnDemandAuthentication;
 
 public abstract class AbstractTest implements SauceOnDemandSessionIdProvider {
 
-
-
-    private static AndroidDriver<WebElement> driver;
+    private AndroidDriver<WebElement> driver;
     protected  StatusApp app;
 
     public static final String USERNAME = System.getenv("SAUCE_USERNAME");
@@ -34,16 +30,12 @@ public abstract class AbstractTest implements SauceOnDemandSessionIdProvider {
     @Rule
     public SauceOnDemandTestWatcher resultReportingTestWatcher = new SauceOnDemandTestWatcher(this, authentication);
 
-
-
-
     @Rule
     public TestName name = new TestName() {
         public String getMethodName() {
             return String.format("%s", super.getMethodName());
         }
     };
-
 
 
     @Before
@@ -54,13 +46,10 @@ public abstract class AbstractTest implements SauceOnDemandSessionIdProvider {
 
         app = new StatusApp(driver);
         this.sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
-
     }
-
 
     @After
     public  void teardown(){
-
         //close the app
         driver.quit();
     }
@@ -69,6 +58,5 @@ public abstract class AbstractTest implements SauceOnDemandSessionIdProvider {
     public String getSessionId() {
         return sessionId;
     }
-
 
 }
